@@ -1,0 +1,8 @@
+/Game/.idea/
+/Game/Library/
+/Game/Logs/
+/Game/obj/
+/Game/Temp/
+/Game/UserSettings/
+*.csproj
+*.sln
