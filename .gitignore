@@ -6,3 +6,4 @@
 /Game/UserSettings/
 *.csproj
 *.sln
+/Game/Game.sln.DotSettings.user
