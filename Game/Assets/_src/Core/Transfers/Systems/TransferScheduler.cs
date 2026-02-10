@@ -9,6 +9,7 @@ namespace Game.Core.Transfers
     public sealed class TransferScheduler : ITransferScheduler, ITransferStream
     {
         private int _nextId = 1;
+
         private readonly Dictionary<int, TaskImpl> _tasks = new();
         private readonly ObservableEvent<TransferStarted> _started = new();
         private readonly ObservableEvent<TransferProgress> _progress = new();

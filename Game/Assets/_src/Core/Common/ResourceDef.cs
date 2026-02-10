@@ -1,9 +1,13 @@
+using System;
+
 namespace Game.Core.Common
 {
-    public sealed record ResourceDef(
-        ResourceId Id,
-        string Key, // "res.n1" / "iron_ore" (стабільний ключ)
-        string Name,
-        int StackLimit = 999
-    );
+    [Serializable]
+    public struct ResourceDef
+    {
+        public ResourceId Id;
+        public string Key;
+        public string Name;
+        public int StackLimit;
+    }
 }

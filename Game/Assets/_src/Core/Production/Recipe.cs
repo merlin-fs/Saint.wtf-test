@@ -5,8 +5,8 @@ namespace Game.Core.Production
 {
     public struct ResourceBundle
     {
-        public ResourceId Resource;
-        public int Amount;
+        public readonly ResourceId Resource;
+        public readonly int Amount;
 
         public ResourceBundle(ResourceId resource, int amount)
         {
@@ -15,7 +15,7 @@ namespace Game.Core.Production
         }
     }
 
-    // Гнучкий рецепт (можна розширити до списку входів)
+    // рецепт (можна розширити)
     public record Recipe(
         ResourceId Output,
         IReadOnlyList<ResourceBundle> Inputs,

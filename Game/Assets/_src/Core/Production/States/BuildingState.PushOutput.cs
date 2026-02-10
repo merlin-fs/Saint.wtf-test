@@ -1,4 +1,3 @@
-
 using Game.Core.Common.Fsm;
 
 namespace Game.Core.Production.States

@@ -1,4 +1,3 @@
-
 using Game.Core.Economy;
 
 namespace Game.Core.Player

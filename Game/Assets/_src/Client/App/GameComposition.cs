@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using Game.Client.Player;
+using Game.Client.Resources;
 using Game.Core.Common;
 using Game.Core.Economy;
+using Game.Core.Player;
 using Game.Core.Production;
 using Game.Core.Transfers;
 
@@ -14,23 +17,19 @@ namespace Game.Client.App
         public TransferScheduler Scheduler { get; }
         public List<BuildingModel> Buildings { get; }
         public BuildingProductionSystem ProductionSystem { get; }
+        public PlayerBundle PlayerBundle { get; }
 
         // Можеш також зберігати bundles (model+fsm), якщо потрібно Dispose
         private readonly List<BuildingFsm> _fsms = new();
 
-        public GameComposition()
+        public GameComposition(ResourceLibrary resourceLibrary)
         {
             // 1) Catalog
             var n1 = new ResourceId(1);
             var n2 = new ResourceId(2);
             var n3 = new ResourceId(3);
-
-            Catalog = new ResourceCatalog(new[]
-            {
-                new ResourceDef(n1, "res.n1", "N1"),
-                new ResourceDef(n2, "res.n2", "N2"),
-                new ResourceDef(n3, "res.n3", "N3"),
-            });
+            
+            Catalog = new ResourceCatalog(resourceLibrary.All);
 
             // 2) Scheduler (і stream теж він)
             Scheduler = new TransferScheduler();
@@ -62,6 +61,18 @@ namespace Game.Client.App
                     new ResourceBundle(n2, 1),
                 }
             );
+            
+            var rWarehouse = new Recipe(
+                // неважливо, бо це склад, який нічого не виробляє, але приймає ресурси.
+                // Можна навіть вигадати спеціальний "рецепт для складу", який не має Output, а просто дозволяє приймати певні ресурси.
+                Output: new ResourceId(0),   
+                ProductionTimeSeconds: 0f,
+                Inputs: new List<ResourceBundle>()
+                {
+                    new ResourceBundle(n3, 0),                    
+                }
+            );
+            
 
             // 4) Create buildings
             var b1 = BuildingFactory.Create(
@@ -102,8 +113,22 @@ namespace Game.Client.App
                 stream: stream,
                 debugNamePrefix: "B3"
             );
+            
+            var bWarehouse = BuildingFactory.Create(
+                catalog: Catalog,
+                id: new BuildingId(4),
+                recipe: rWarehouse,
+                inputStorageCapacity: 999,
+                outputStorageCapacity: 0,
+                inputTransferSecondsPerUnit: 0.25f,
+                outputTransferSecondsPerUnit: 0f,
+                scheduler: scheduler,
+                stream: stream,
+                debugNamePrefix: "Warehouse"
+            );
+            
 
-            Buildings = new List<BuildingModel> { b1.Model, b2.Model, b3.Model };
+            Buildings = new List<BuildingModel> { b1.Model, b2.Model, b3.Model, bWarehouse.Model };
 
             _fsms.Add(b1.Fsm);
             _fsms.Add(b2.Fsm);
@@ -112,6 +137,13 @@ namespace Game.Client.App
             // 5) Production system (тікає FSM-и)
             ProductionSystem = new BuildingProductionSystem(_fsms);
 
+            PlayerBundle = BuildPlayer(Catalog, 
+                inventoryCapacity: 10, 
+                scheduler, 
+                stream, 
+                pickupSecondsPerUnit: 0.25f, 
+                dropSecondsPerUnit: 0.25f);
+            
             // 6) (Опціонально) стартовий ресурс, щоб цикл запустився
             // Наприклад, покласти трохи N1 в B2 input, N1+N2 в B3 input:
             // (припускаємо, що StorageModel доступний як IResourceContainer; add instant)
@@ -121,7 +153,30 @@ namespace Game.Client.App
             b3.Model.InputStorage.TryAddInstant(n1);
             b3.Model.InputStorage.TryAddInstant(n2);
         }
+        
+        private PlayerBundle BuildPlayer(IResourceCatalog catalog,
+            int inventoryCapacity,
+            ITransferScheduler scheduler,
+            ITransferStream stream,
+            float pickupSecondsPerUnit,
+            float dropSecondsPerUnit)
+        {
+            var inventory = new StorageModel(catalog, inventoryCapacity, "Player.Inventory");
+            var model = new PlayerModel(inventory);
 
+            var carry = new SimplePlayerTransferSystem(
+                player: model,
+                catalog: catalog,
+                scheduler: scheduler,
+                stream: stream,
+                pickupSecondsPerUnit: pickupSecondsPerUnit,
+                dropSecondsPerUnit: dropSecondsPerUnit
+            );
+
+            return new PlayerBundle(model, carry);
+        }
+        
+        
         public void Tick(float dt)
         {
             // Типовий порядок:
@@ -130,6 +185,8 @@ namespace Game.Client.App
 
             // 2) тікаємо production (FSM-и, які створюють нові transfers)
             ProductionSystem.Tick(dt);
+            
+            PlayerBundle.PlayerTransfer.Tick(dt);            
         }
     }
 }

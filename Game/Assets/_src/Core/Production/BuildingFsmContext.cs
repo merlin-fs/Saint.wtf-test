@@ -47,7 +47,7 @@ namespace Game.Core.Production
                 return false;
             }
 
-            bool ok = true;
+            var ok = true;
             B.Recipe.ForEachInput((rid, amount) =>
             {
                 if (amount <= 0) return;
@@ -76,7 +76,7 @@ namespace Game.Core.Production
             PendingPull = 0;
             B.Recipe.ForEachInput((rid, amount) =>
             {
-                for (int i = 0; i < amount; i++)
+                for (var i = 0; i < amount; i++)
                 {
                     var id = Scheduler.Enqueue(new TransferRequest(
                         Source: B.InputStorage,
@@ -96,7 +96,7 @@ namespace Game.Core.Production
 
         public bool ConsumeInputsFromInPort()
         {
-            bool ok = true;
+            var ok = true;
             B.Recipe.ForEachInput((rid, amount) =>
             {
                 if (!B.InPort.TryConsume(rid, amount)) ok = false;
@@ -138,28 +138,27 @@ namespace Game.Core.Production
 
         public void OnTransferFinished(TransferFinished e)
         {
-            if (!_routes.TryGetValue(e.Id.Value, out var kind))
+            if (!_routes.Remove(e.Id.Value, out var kind))
                 return;
-
-            _routes.Remove(e.Id.Value);
 
             if (kind == TransferKind.PullInput) PendingPull = Math.Max(0, PendingPull - 1);
             else PendingPush = Math.Max(0, PendingPush - 1);
 
-            if (e.Status == TransferStatus.Failed)
-            {
-                // просте визначення причини
-                B.StopReason = B.OutputStorage.FreeSpace <= 0 ? StopReason.OutputFull : StopReason.TransferBlocked;
+            if (e.Status != TransferStatus.Failed) return;
+            
+            // просте визначення причини
+            B.StopReason = B.OutputStorage.FreeSpace <= 0 
+                ? StopReason.OutputFull 
+                : StopReason.TransferBlocked;
 
-                // Щоб state Tick() міг одразу зупинитись:
-                if (kind == TransferKind.PullInput) PendingPull = -999;
-                else PendingPush = -999;
-            }
+            // Щоб state Tick() міг одразу зупинитись:
+            if (kind == TransferKind.PullInput) PendingPull = -999;
+            else PendingPush = -999;
         }
 
         private bool HasAllInputsNow()
         {
-            bool ok = true;
+            var ok = true;
             B.Recipe.ForEachInput((rid, amount) =>
             {
                 if (amount <= 0) return;
