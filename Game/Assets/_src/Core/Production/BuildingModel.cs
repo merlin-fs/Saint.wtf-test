@@ -47,16 +47,5 @@ namespace Game.Core.Production
         public StopReason StopReason { get; internal set; }
 
         public float ProductionProgress { get; internal set; }
-
-        // --- runtime state (internal) ---
-        internal float ProduceTimer;
-
-        internal int PendingPullTransfers;
-        internal int PendingPushTransfers;
-
-        internal bool PullScheduled;
-        internal bool PushScheduled;
-
-        internal bool TransferFailed;
     }
 }

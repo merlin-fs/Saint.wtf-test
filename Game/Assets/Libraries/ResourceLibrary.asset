@@ -18,16 +18,19 @@ MonoBehaviour:
       Name: N1
       StackLimit: 999
     material: {fileID: 2100000, guid: 6dc3de2ab9ea6ff48b186f462424beda, type: 2}
+    uiColor: {r: 0, g: 0, b: 1, a: 1}
     scale: {x: 0.2, y: 0.2, z: 0.2}
   - resourceDef:
       Key: res.n2
       Name: N2
       StackLimit: 999
     material: {fileID: 2100000, guid: 746ff2c4e6be3e24db8044ad94c68b12, type: 2}
+    uiColor: {r: 0, g: 1, b: 0, a: 1}
     scale: {x: 0.2, y: 0.2, z: 0.2}
   - resourceDef:
       Key: res.n3
       Name: N3
       StackLimit: 999
     material: {fileID: 2100000, guid: 5d976719c53a24148b399c257b6ee335, type: 2}
+    uiColor: {r: 1, g: 0, b: 0, a: 1}
     scale: {x: 0.2, y: 0.2, z: 0.2}

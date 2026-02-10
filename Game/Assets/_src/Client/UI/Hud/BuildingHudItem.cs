@@ -44,7 +44,6 @@ namespace Game.Client.UI.Hud
             if (titleText != null)
                 titleText.text = $"OUT: {ResName(_building.Recipe.Output)}";
 
-            // force first update
             _lastProgressStep = -1;
             _stateTimer = 0f;
             _progressTimer = 0f;
@@ -153,7 +152,7 @@ namespace Game.Client.UI.Hud
         private string MissingInputsDetail()
         {
             var sb = new StringBuilder(64);
-            bool any = false;
+            var any = false;
 
             _building.Recipe.ForEachInput((rid, need) =>
             {

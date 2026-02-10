@@ -5,16 +5,16 @@ using Game.Core.Economy;
 
 namespace Game.Core.Production
 {
-    public sealed class RecipeInputFilter : IResourceTransferFilter
+    public sealed class RecipeFilter : IResourceTransferFilter
     {
         private readonly IReadOnlyList<ResourceId> _resourceBundles;
 
-        public RecipeInputFilter(in Recipe recipe)
+        public static RecipeFilter FromInputRecipe(in Recipe recipe)
         {
-            _resourceBundles = recipe.Inputs.Select(id => id.Resource).ToList();
+            return new RecipeFilter(recipe.Inputs.Select(id => id.Resource).ToArray());
         }
 
-        public RecipeInputFilter(params ResourceId[] resources)
+        public RecipeFilter(params ResourceId[] resources)
         {
             _resourceBundles = resources;
         }

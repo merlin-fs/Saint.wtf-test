@@ -24,12 +24,10 @@ namespace Game.Core.Production
             var inputStorage  = new StorageModel(catalog, inputStorageCapacity,  $"{debugNamePrefix}.input");
             var outputStorage = new StorageModel(catalog, outputStorageCapacity, $"{debugNamePrefix}.output");
 
-            // Порти (внутрішні буфери будівлі)
-            // InPort: має вмістити всі інпути за цикл (0 якщо інпутів нема → зробимо хоча б 1)
+            // Порти
             var inPortCap = recipe.TotalInputUnits();
             if (inPortCap < 1) inPortCap = 1;
 
-            // OutPort: у нашій схемі 1 output за цикл → 1
             var outPortCap = 1;
 
             var inPort  = new StorageModel(catalog, inPortCap,  $"{debugNamePrefix}.inPort");

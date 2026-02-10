@@ -45,7 +45,7 @@ namespace Game.Client.UI.Hud
                 }
                 case PlacementMode.GroundFlat:
                 {
-                    transform.rotation = Quaternion.Euler(groundTiltDeg, 0, 0f);
+                    transform.rotation = Quaternion.Euler(groundTiltDeg, yawOffsetDeg, 0f);
                     break;
                 }
                 case PlacementMode.GroundYawToCamera:

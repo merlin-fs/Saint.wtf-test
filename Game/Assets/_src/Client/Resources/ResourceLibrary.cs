@@ -15,6 +15,7 @@ namespace Game.Client.Resources
         {
             public ResourceDef resourceDef;         // Resource
             public Material material;               // або Color, або prefab
+            public Color uiColor;
             public Vector3 scale = Vector3.one;     
         }
 
