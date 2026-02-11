@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Game.Core.Common
 {
+    /// <summary>
+    /// Каталог ресурсів, який відповідає за зберігання інформації про всі ресурси в грі.
+    /// </summary>
     public sealed class ResourceCatalog : IResourceCatalog
     {
         private readonly Dictionary<ResourceId, int> _idToIndex = new();

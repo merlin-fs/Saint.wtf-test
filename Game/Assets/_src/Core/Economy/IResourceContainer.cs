@@ -4,6 +4,9 @@ using Game.Core.Common;
 
 namespace Game.Core.Economy
 {
+    /// <summary>
+    /// ReadOnly Інтерфейс для контейнера ресурсів.
+    /// </summary>
     public interface IReadOnlyResourceContainer
     {
         int Capacity { get; }
@@ -11,7 +14,10 @@ namespace Game.Core.Economy
         int FreeSpace { get; }              // з урахуванням reserve
         int Count(ResourceId id);
     }
-    
+ 
+    /// <summary>
+    /// Контейнер ресурсів, який підтримує операції додавання та видалення ресурсів з урахуванням анімацій та можливих відміни операцій.
+    /// </summary>
     public interface IResourceContainer : IReadOnlyResourceContainer
     {
         // Source: "зняли 1 шт" (або зарезервували зняття)

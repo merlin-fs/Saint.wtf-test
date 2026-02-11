@@ -9,8 +9,10 @@ using Game.Core.Transfers;
 
 namespace Game.Client.App
 {
-    // Цей клас - "композиція" гри, яка збирає всі частини разом (каталог, будівлі, FSM-и, scheduler).
-    // тестова заміна DI
+    /// <summary>
+    /// Цей клас - "композиція" гри, яка збирає всі частини разом (каталог, будівлі, FSM-и, scheduler).
+    /// тестова заміна DI
+    /// </summary>
     public sealed class GameComposition
     {
         public IResourceCatalog Catalog { get; }
@@ -174,9 +176,9 @@ namespace Game.Client.App
         
         public void Tick(float dt)
         {
-            // scheduler (прогрес transfer-ів)
+            // scheduler (прогрес transfer`ів)
             Scheduler.Tick(dt);
-            // production (FSM-и, які створюють нові transfers)
+            // production (FSM`и, які створюють нові transfers)
             ProductionSystem.Tick(dt);
             // player (прогрес transfer-ів)
             PlayerBundle.PlayerTransfer.Tick(dt);            

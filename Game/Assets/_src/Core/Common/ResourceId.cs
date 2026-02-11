@@ -2,6 +2,9 @@ using JetBrains.Annotations;
 
 namespace Game.Core.Common
 {
+    /// <summary>
+    /// Ідентифікатор ресурсу. Використовується для посилання на конкретний тип ресурсу в грі.
+    /// </summary>
     public readonly struct ResourceId : System.IEquatable<ResourceId>, System.IComparable<ResourceId>
     {
         public readonly int Value;

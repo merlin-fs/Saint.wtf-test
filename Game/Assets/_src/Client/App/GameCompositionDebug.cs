@@ -11,6 +11,10 @@ using UnityEngine;
 
 namespace Game.Client.App.Debugging
 {
+    /// <summary>
+    /// Система для логування внутрішніх подій GameComposition (трансферів, контейнерів, будівель).
+    /// auto-gen gpt
+    /// </summary>
     public sealed class GameCompositionDebug : ITickSystem, IDisposable
     {
         public sealed class Settings

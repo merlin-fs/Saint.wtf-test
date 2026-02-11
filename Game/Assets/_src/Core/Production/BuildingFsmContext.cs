@@ -8,6 +8,9 @@ namespace Game.Core.Production
 {
     internal enum TransferKind : byte { PullInput, PushOutput }
 
+    /// <summary>
+    /// Контекст для FSM будівлі, який містить посилання на модель будівлі, планувальник передач, а також поточний стан виконання циклу виробництва, включаючи заплановані та очікуючі операції передачі ресурсів.
+    /// </summary>
     public sealed class BuildingFsmContext
     {
         public readonly BuildingModel B;

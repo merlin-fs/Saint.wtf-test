@@ -6,6 +6,9 @@ namespace Game.Core.Production
 {
     public record BuildingBundle(BuildingModel Model, BuildingFsm Fsm);
 
+    /// <summary>
+    /// Фабрика для створення будівель, яка інкапсулює логіку ініціалізації всіх необхідних компонентів будівлі, таких як склади, порти та FSM.
+    /// </summary>
     public static class BuildingFactory
     {
         public static BuildingBundle Create(

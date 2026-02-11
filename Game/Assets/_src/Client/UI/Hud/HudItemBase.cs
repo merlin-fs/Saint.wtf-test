@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Game.Client.UI.Hud
 {
+    /// <summary>
+    /// Базовий клас для елементів HUD, які прив'язуються до об'єктів у світі (наприклад, над будівлями).
+    /// </summary>
     public abstract class HudItemBase : MonoBehaviour, IHudItem
     {
         [Header("Placement")]
@@ -66,12 +69,8 @@ namespace Game.Client.UI.Hud
 
         public virtual void Dispose()
         {
-            // derived items unsubscribe here
         }
 
-        /// <summary>
-        /// Derived HUD може зробити "force refresh" коли HUD знову показали.
-        /// </summary>
         protected virtual void OnVisibilityChanged(bool visible) { }
 
         public enum PlacementMode : byte

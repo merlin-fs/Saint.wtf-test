@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Game.Client.UI.Hud
 {
+    /// <summary>
+    /// Контролер для HUD'ів. Відповідає за спавн та розміщення елементів HUD на екрані.
+    /// </summary>
     public sealed class HudOverlayController : MonoBehaviour
     {
         [SerializeField] private Camera worldCamera;
@@ -24,7 +27,6 @@ namespace Game.Client.UI.Hud
             var inst = Instantiate(prefab, parent, worldPositionStays: true);
             _items.Add(inst);
 
-            // глобальний прапорець застосовуємо одразу
             inst.SetVisible(_enabled);
             return inst;
         }

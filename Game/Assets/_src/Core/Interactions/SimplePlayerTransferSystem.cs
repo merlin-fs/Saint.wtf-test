@@ -7,6 +7,9 @@ using JetBrains.Annotations;
 
 namespace Game.Core.Player
 {
+    /// <summary>
+    /// Відповідає за автоматичний перенос ресурсів між інвентарем гравця та складом, коли гравець знаходиться в зоні складу.
+    /// </summary>
     public sealed class SimplePlayerTransferSystem : ITickSystem, IStorageInteractionSink, IDisposable
     {
         private readonly PlayerModel _player;

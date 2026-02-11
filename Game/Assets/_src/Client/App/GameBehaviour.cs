@@ -8,6 +8,9 @@ using Game.Client.Transfers;
 using Game.Client.UI.Hud;
 using UnityEngine;
 
+/// <summary>
+/// GameRoot клас, який ініціалізує всю гру і керує її оновленням.
+/// </summary>
 public class GameBehaviour : MonoBehaviour
 {
     [SerializeField] private ResourceLibrary resourceLibrary;
@@ -45,7 +48,7 @@ public class GameBehaviour : MonoBehaviour
 
             LogContainerChanged = true,
             LogContainerSummaryOnChange = true,
-            MinSecondsBetweenContainerLogs = 0.1f, // щоб не спамити
+            MinSecondsBetweenContainerLogs = 0.1f, 
 
             LogBuildingStateChanges = true,
             LogBuildingProducingProgress = false,

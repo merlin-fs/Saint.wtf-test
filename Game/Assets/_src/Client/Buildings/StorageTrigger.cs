@@ -6,7 +6,11 @@ using UnityEngine;
 
 namespace Game.Client.Buildings
 {
-    public sealed class StorageTrigger : MonoBehaviour
+    /// <summary>
+    /// Тригер для взаємодії гравця зі складом будівлі.
+    /// Відповідає за повідомлення про входження/виходження гравця в зону складу.
+    /// </summary>
+    public class StorageTrigger : MonoBehaviour
     {
         [SerializeField] private StorageRole role;
 

@@ -8,7 +8,10 @@ using UnityEngine;
 
 namespace Game.Client.Buildings
 {
-    public sealed class BuildingView : MonoBehaviour
+    /// <summary>
+    /// Відповідає за візуалізацію будівлі, її складів та тригерів.
+    /// </summary>
+    public class BuildingView : MonoBehaviour
     {
         [SerializeField] private StoragePileView inputPile;
         [SerializeField] private StoragePileView outputPile;

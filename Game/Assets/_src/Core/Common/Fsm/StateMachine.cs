@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace Game.Core.Common.Fsm
 {
+    /// <summary>
+    /// Простая реализация конечного автомата.
+    /// Состояния должны реализовать IState<TContext, TStateId>.
+    /// </summary>
+    /// <typeparam name="TContext"></typeparam>
+    /// <typeparam name="TStateId"></typeparam>
     public sealed class StateMachine<TContext, TStateId>
         where TStateId : notnull
     {
@@ -24,6 +30,11 @@ namespace Game.Core.Common.Fsm
             return this;
         }
 
+        /// <summary>
+        /// Запускає автомат у початковому стані. Викликає метод Enter початкового стану.
+        /// </summary>
+        /// <param name="initial"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         public void Start(TStateId initial)
         {
             if (!_states.TryGetValue(initial, out var st))
@@ -34,6 +45,12 @@ namespace Game.Core.Common.Fsm
             st.Enter(Context);
         }
 
+        /// <summary>
+        /// Викликає метод Tick поточного стану.
+        /// Якщо він повертає true, то виконує перехід до наступного стану, який повертається через out-параметр next.
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         public void Tick(float dt)
         {
             if (Current == null)
@@ -43,6 +60,11 @@ namespace Game.Core.Common.Fsm
                 TransitionTo(next);
         }
 
+        /// <summary>
+        /// Виконує перехід до стану next. Викликає метод Exit поточного стану, а потім Enter нового стану.
+        /// </summary>
+        /// <param name="next"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         public void TransitionTo(TStateId next)
         {
             if (Current == null)

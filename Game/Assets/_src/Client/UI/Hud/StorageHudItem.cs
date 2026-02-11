@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Game.Client.UI.Hud
 {
+    /// <summary>
+    /// HUD-елемент для відображення кількості ресурсів у складі. Показує загальну кількість та заповнення бару.
+    /// </summary>
     public sealed class StorageHudItem : HudItemBase
     {
         [SerializeField] private ResourceLibrary resourceLibrary;

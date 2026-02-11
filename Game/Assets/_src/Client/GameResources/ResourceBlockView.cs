@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Game.Client.Resources
 {
+    /// <summary>
+    /// Візуальне представлення блоку ресурсу.
+    /// </summary>
     public sealed class ResourceBlockView : MonoBehaviour
     {
         [SerializeField] private MeshRenderer meshRenderer;

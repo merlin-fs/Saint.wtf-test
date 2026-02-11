@@ -4,6 +4,10 @@ using Game.Core.Common;
 
 namespace Game.Core.Production
 {
+    /// <summary>
+    /// Розширення для класу Recipe, що надає додаткові методи для роботи з інгредієнтами рецепту, такими як перевірка наявності інгредієнтів,
+    /// підрахунок загальної кількості одиниць та ітерація по інгредієнтах.
+    /// </summary>
     public static class RecipeExt
     {
         public static bool HasInputs(this Recipe recipe) => recipe.Inputs?.Count > 0;

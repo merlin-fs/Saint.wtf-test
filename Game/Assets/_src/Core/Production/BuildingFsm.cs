@@ -7,6 +7,9 @@ using FTg.Common.Observables;
 
 namespace Game.Core.Production
 {
+    /// <summary>
+    /// Клас, який реалізує кінцевий автомат для керування станами будівлі, включаючи обробку переходів між станами та взаємодію з системою передач ресурсів.
+    /// </summary>
     public sealed class BuildingFsm : ITickSystem, IDisposable
     {
         private readonly StateMachine<BuildingFsmContext, BuildingStatus> _sm;

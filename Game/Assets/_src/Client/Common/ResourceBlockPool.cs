@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Game.Client.Common
 {
+    /// <summary>
+    /// Пул для ResourceBlockView. Просто для оптимізації Instantiate/Destroy, бо їх буде багато.
+    /// </summary>
     public sealed class ResourceBlockPool
     {
         private readonly Queue<ResourceBlockView> _pool = new();

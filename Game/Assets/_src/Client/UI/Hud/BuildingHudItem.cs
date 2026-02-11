@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Game.Client.UI.Hud
 {
+    /// <summary>
+    /// Відповідає за відображення статусу будівлі: що вона робить, чому зупинилась, прогрес виробництва.
+    /// </summary>
     public sealed class BuildingHudItem : HudItemBase
     {
         [Header("UI")]

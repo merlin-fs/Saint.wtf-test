@@ -1,5 +1,8 @@
 namespace Game.Core.Production
 {
+    /// <summary>
+    /// Статус будівлі, який визначає її поточний стан у процесі виробництва. 
+    /// </summary>
     public enum BuildingStatus : byte
     {
         Idle = 0,

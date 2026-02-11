@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 namespace Game.Client.Player
 {
+    /// <summary>
+    /// Простий рух гравця. Дивиться в напрямку руху (опціонально). Рух відносно камери (опціонально).
+    /// </summary>
     public sealed class PlayerMover : MonoBehaviour
     {
         [SerializeField] private InputActionReference moveAction; // Gameplay/Move

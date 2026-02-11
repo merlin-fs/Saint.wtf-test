@@ -3,7 +3,11 @@ using Game.Core.Economy;
 
 namespace Game.Core.Production
 {
-    public sealed class BuildingModel : IBuilding
+    /// <summary>
+    /// Модель будівлі, яка реалізує інтерфейс IBuilding.
+    /// Вона містить всі необхідні дані та логіку для управління процесом виробництва, включаючи зберігання ресурсів, порти вводу/виводу та стан будівлі.
+    /// </summary>
+    public class BuildingModel : IBuilding
     {
         public BuildingModel(
             BuildingId id,

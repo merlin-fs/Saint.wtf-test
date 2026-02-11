@@ -5,8 +5,8 @@ namespace Game.Core.Economy
     public static class ResourceContainerExt
     {
         /// <summary>
-        /// Instant add without transfer (internal building logic).
-        /// Uses reserve+commit to keep invariants consistent.
+        /// Спробувати додати ресурс до контейнера миттєво, без можливості відміни.
+        /// Повертає true, якщо ресурс успішно додано, і false, якщо не вистачає місця або ресурс не може бути доданий.
         /// </summary>
         public static bool TryAddInstant(this IResourceContainer container, ResourceId id)
         {
@@ -18,20 +18,23 @@ namespace Game.Core.Economy
         }
 
         /// <summary>
-        /// Consume N units instantly (no visualization). Returns false if not enough.
-        /// Removes items permanently (does not cancel).
+        /// Спробувати видалити ресурс з контейнера миттєво, без можливості відміни.
+        /// Повертає true, якщо ресурс успішно видалено, і false, якщо ресурсу недостатньо або він не може бути видалений.
         /// </summary>
+        /// <param name="container"></param>
+        /// <param name="id"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
         public static bool TryConsume(this IResourceContainer container, ResourceId id, int amount)
         {
             if (amount <= 0) return true;
 
-            // quick precheck
             if (container.Count(id) < amount) return false;
 
             for (var i = 0; i < amount; i++)
             {
                 if (!container.TryBeginRemove(id, out _))
-                    return false; // should not happen after precheck
+                    return false; 
             }
 
             return true;

@@ -5,6 +5,10 @@ using Game.Core.Economy;
 
 namespace Game.Core.Production
 {
+    /// <summary>
+    /// Фільтр для ресурсів, який дозволяє лише ресурси, що входять до складу рецепту.
+    /// Використовується для обмеження передачі ресурсів лише тими, які потрібні для виконання рецепту.
+    /// </summary>
     public sealed class RecipeFilter : IResourceTransferFilter
     {
         private readonly IReadOnlyList<ResourceId> _resourceBundles;

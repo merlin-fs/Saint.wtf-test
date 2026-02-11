@@ -7,6 +7,10 @@ using UnityEngine;
 
 namespace Game.Client.Resources
 {
+    /// <summary>
+    /// Бібліотека ресурсів. Зберігає інформацію про всі ресурси, які є в грі,
+    /// та їх візуальне представлення (матеріал, колір для UI, масштаб).
+    /// </summary>
     [CreateAssetMenu(menuName = "Game/ResourceLibrary")]
     public sealed class ResourceLibrary : ScriptableObject
     {

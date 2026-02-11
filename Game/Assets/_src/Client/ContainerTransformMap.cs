@@ -6,7 +6,8 @@ using UnityEngine;
 namespace Game.Client
 {
     /// <summary>
-    /// Maps Core containers (IResourceContainer instances) to world points (Transform).
+    /// Відповідає за зберігання відповідності між контейнерами ресурсів та їх позиціями у світі.
+    /// Це потрібно для того, щоб знати, де візуалізувати ресурси, які знаходяться в певному контейнері.
     /// </summary>
     public sealed class ContainerTransformMap
     {

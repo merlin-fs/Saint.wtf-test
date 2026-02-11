@@ -6,6 +6,9 @@ using Game.Core.Economy;
 
 namespace Game.Core.Transfers
 {
+    /// <summary>
+    /// Система планування передач ресурсів між контейнерами з урахуванням тривалості, прогресу та можливості скасування.
+    /// </summary>
     public sealed class TransferScheduler : ITransferScheduler, ITransferStream
     {
         private int _nextId = 1;
@@ -29,7 +32,7 @@ namespace Game.Core.Transfers
                 ? 0.0001f 
                 : request.DurationSeconds;
 
-            // 1) Резервуємо ресурс у джерела
+            // Резервуємо ресурс у джерела
             if (!request.Source.TryBeginRemove(request.Resource, out var removeToken))
             {
                 // Не вдалося розпочати -> невдача
@@ -37,7 +40,7 @@ namespace Game.Core.Transfers
                 return id;
             }
 
-            // 2) Резервуємо місце в пункті призначення
+            // Резервуємо місце в пункті призначення
             if (!request.Destination.TryReserveAdd(request.Resource, out var addReservation))
             {
                 // Відкатуємо видалення
@@ -46,7 +49,7 @@ namespace Game.Core.Transfers
                 return id;
             }
 
-            // 3) Створюємо task (статус: Виконується)
+            // Створюємо task (статус: Виконується)
             var task = new TaskImpl(
                 id: id,
                 source: request.Source,
@@ -60,7 +63,7 @@ namespace Game.Core.Transfers
 
             _tasks[id.Value] = task;
 
-            // 4) Повідомляємо про початок
+            // Повідомляємо про початок
             _started.Invoke(new TransferStarted(
                 Id: id,
                 Source: request.Source,

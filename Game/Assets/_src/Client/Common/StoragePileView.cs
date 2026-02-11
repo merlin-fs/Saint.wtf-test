@@ -10,6 +10,10 @@ using UnityEngine;
 
 namespace Game.Client.Common
 {
+    /// <summary>
+    /// Візуалізує викладку ресурсів в межах певного BoxCollider.
+    /// Кількість блоків відповідає кількості ресурсів в контейнері.
+    /// </summary>
     public sealed class StoragePileView : MonoBehaviour, IWorldBoundsProvider
     {
         [Header("Binding")] [SerializeField] private Transform pileRoot;

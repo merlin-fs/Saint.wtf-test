@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Game.Client.Transfers
 {
+    /// <summary>
+    /// Відповідає за візуалізацію процесу трансферу ресурсів між контейнерами. Просто анімує блок ресурсу від джерела до приймача.
+    /// </summary>
     public sealed class VisualTransferSystem : MonoBehaviour
     {
         [Header("Prefab/Pool")]
@@ -17,22 +20,13 @@ namespace Game.Client.Transfers
         [SerializeField] private ResourceLibrary visualCatalog;
 
         [Header("Placement")]
-        [SerializeField] private Vector3 startOffset = new(0f, 0.25f, 0f);
-        [SerializeField] private Vector3 endOffset   = new(0f, 0.25f, 0f);
+        [SerializeField] private Vector3 startOffset = new(0f, 0.05f, 0f);
+        [SerializeField] private Vector3 endOffset   = new(0f, 0.05f, 0f);
 
         private ResourceBlockPool _pool;
         private ContainerTransformMap _map;
-
         private CompositeDisposable _disposables;
-
         private readonly Dictionary<int, ActiveVisual> _active = new();
-
-        private struct ActiveVisual
-        {
-            public ResourceBlockView View;
-            public Vector3 From;
-            public Vector3 To;
-        }
 
         public void Initialize(ITransferStream stream, ContainerTransformMap map)
         {
@@ -42,7 +36,6 @@ namespace Game.Client.Transfers
             _disposables?.Dispose();
             _disposables = new CompositeDisposable();
 
-            // Підписка (через стандартний IObservable.Subscribe(IObserver))
             stream.Started.Subscribe(OnStarted).AddTo(_disposables);
             stream.Progress.Subscribe(OnProgress).AddTo(_disposables);
             stream.Finished.Subscribe(OnFinished).AddTo(_disposables);
@@ -55,16 +48,15 @@ namespace Game.Client.Transfers
 
         private void OnStarted(TransferStarted e)
         {
-            if (_pool == null || _map == null) return;
-
-            // де знаходяться source/destination у світі
+            // source/destination у світі
             var from = _map.GetPosition(e.Source) + startOffset;
             var to   = _map.GetPosition(e.Destination) + endOffset;
 
             var view = _pool.Rent();
             view.transform.position = from;
+            view.gameObject.SetActive(true);
 
-            // застосувати вигляд під ресурс
+            // застосувати view під ресурс
             if (visualCatalog != null && visualCatalog.TryGet(e.Resource, out var visual))
                 view.Apply(visual);
 
@@ -92,5 +84,13 @@ namespace Game.Client.Transfers
             if (_active.Remove(e.Id.Value, out var v))
                 _pool.Return(v.View);
         }
+
+        private struct ActiveVisual
+        {
+            public ResourceBlockView View;
+            public Vector3 From;
+            public Vector3 To;
+        }
+
     }
 }
